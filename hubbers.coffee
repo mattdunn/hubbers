@@ -1,4 +1,10 @@
 #!/usr/bin/env coffee
 
 require('zappajs') ->
-  @get '/': 'hi'
+  @enable 'default layout'
+
+  @get '/': -> 
+    @render 'index'
+
+  @view index: ->
+    @title = 'hubbers'
