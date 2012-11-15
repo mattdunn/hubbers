@@ -1,5 +1,6 @@
 #!/usr/bin/env coffee
 request = require('superagent')
+step = require('step')
 
 require('zappajs') ->
   @enable 'default layout'
@@ -18,14 +19,15 @@ require('zappajs') ->
         .get('https://api.github.com/orgs/thoughtworks/members')
         .end((response) ->
           hubbers = (member.login for member in response.body)
-          getRepos(hubbers[0]) 
+          return hubbers[0] 
         )
 
-    getRepos = (hubber) ->
+    getRepos = (error, hubber) ->
       request
         .get('https://api.github.com/users/' + hubber + '/repos')
         .end((response) ->
           console.log(repo) for repo in response.body
         )
 
-    getHubbers()
+    # this doesnt work as running the two functions just queues the ajax calls and returns immediaetly, not with return value of ajax call
+    step(getHubbers,getRepos)
