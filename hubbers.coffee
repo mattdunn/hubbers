@@ -12,9 +12,17 @@ require('zappajs') ->
 
   @post '/analyse': ->
     @send 202
+
+    getRepos = (hubber) ->
+      request
+        .get('https://api.github.com/users/' + hubber + '/repos')
+        .end((response) ->
+          console.log(repo) for repo in response.body
+        )
+
     request
       .get('https://api.github.com/orgs/thoughtworks/members')
       .end((response) -> 
-        for member in response.body 
-          console.log(member.url) 
-      );
+        hubbers = (member.login for member in response.body)
+        getRepos(hubbers[0])
+      )
