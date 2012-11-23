@@ -1,6 +1,6 @@
 #!/usr/bin/env coffee
 request = require('superagent')
-step = require('step')
+$ = require('jquery');
 
 require('zappajs') ->
   @enable 'default layout'
@@ -14,20 +14,38 @@ require('zappajs') ->
   @post '/analyse': ->
     @send 202
 
-    getHubbers = ->
+    # http://www.slideshare.net/sebasporto/embracing-async-with-deferreds-and-promises
+
+    def1 = $.Deferred();
+    def2 = $.Deferred();
+
+    $.when(def1, def2).done((res1, res2) ->
+      console.log(res1)
+      console.log(res2) 
+    )
+
+    def1.resolve("x")
+    def2.resolve("y")
+
+    #use superagent again
+
+    getHubbers = (cb) ->
       request
         .get('https://api.github.com/orgs/thoughtworks/members')
-        .end((response) ->
-          hubbers = (member.login for member in response.body)
-          return hubbers[0] 
-        )
+        .end(cb)
 
-    getRepos = (error, hubber) ->
+    getRepos = (hubber, callback) ->
       request
-        .get('https://api.github.com/users/' + hubber + '/repos')
-        .end((response) ->
-          console.log(repo) for repo in response.body
-        )
+        #.get('https://api.github.com/users/' + hubber + '/repos')
+        #.end(icallback)
 
-    # this doesnt work as running the two functions just queues the ajax calls and returns immediaetly, not with return value of ajax call
-    step(getHubbers,getRepos)
+    # http://stackoverflow.com/questions/6048504/synchronous-request-in-nodejs
+#    step(
+#      -> getHubbers(this)
+#    , (err, hubbersResponse) ->
+#      console.log(hubbersResponse)
+ #       getRepos(hubber.login, this.parallel()) for hubber in hubbersResponse.body 
+#    , (error, reposResponses) ->
+#        for reposResponse in reposResponses
+#          console.log(repo) for repo in reposResponse.body 
+#    )

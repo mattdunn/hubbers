@@ -8,8 +8,8 @@
 , "dependencies": {
     "zappajs": ">=0.3.3"
 ,   "coffee-script": "*"
-,   "superagent": "*"
-,   "step": "*"
+,   "request": "*"
+,   "jquery": "*"
   }
 , "engines": {
     "coffee": ">=1.2.0"
