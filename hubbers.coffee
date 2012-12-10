@@ -1,6 +1,7 @@
 #!/usr/bin/env coffee
+
 request = require('superagent')
-$ = require('jquery');
+async = require('async')
 
 require('zappajs') ->
   @enable 'default layout'
@@ -14,38 +15,30 @@ require('zappajs') ->
   @post '/analyse': ->
     @send 202
 
-    # http://www.slideshare.net/sebasporto/embracing-async-with-deferreds-and-promises
-
-    def1 = $.Deferred();
-    def2 = $.Deferred();
-
-    $.when(def1, def2).done((res1, res2) ->
-      console.log(res1)
-      console.log(res2) 
-    )
-
-    def1.resolve("x")
-    def2.resolve("y")
-
-    #use superagent again
-
-    getHubbers = (cb) ->
+    getHubbers = (processHubbers) ->
       request
         .get('https://api.github.com/orgs/thoughtworks/members')
-        .end(cb)
+        .end((error, hubbers) ->
+          processHubbers(hubbers.body)
+        )
 
-    getRepos = (hubber, callback) ->
-      request
-        #.get('https://api.github.com/users/' + hubber + '/repos')
-        #.end(icallback)
+    processHubbers = (hubbers) ->
+      for hubber in hubbers
+        getRepos = hubbers.map((hubber) -> 
+          (callback) ->
+            request
+              .get('https://api.github.com/users/' + hubber.login + '/repos')
+              .end((error, repos) -> 
+                callback(null, repos)
+              )
+        )
+        async.parallel(
+          getRepos,
+          (err, repos) ->
+            console.log results.length 
+        )
 
-    # http://stackoverflow.com/questions/6048504/synchronous-request-in-nodejs
-#    step(
-#      -> getHubbers(this)
-#    , (err, hubbersResponse) ->
-#      console.log(hubbersResponse)
- #       getRepos(hubber.login, this.parallel()) for hubber in hubbersResponse.body 
-#    , (error, reposResponses) ->
-#        for reposResponse in reposResponses
-#          console.log(repo) for repo in reposResponse.body 
-#    )
+    getHubbers(processHubbers)
+
+    # rate limited to 60 requests per hour for unauthenticated requests
+    # http://developer.github.com/v3/#rate-limiting
