@@ -17,26 +17,31 @@ require('zappajs') ->
 
     getHubbers = (processHubbers) ->
       request
-        .get('https://api.github.com/orgs/thoughtworks/members')
+        .get('https://api.github.com/orgs/thoughtworks/members?client_id=' + process.env.HUBBER_GITHUB_CLIENT_ID + '&client_secret=' + process.env.HUBBER_GITHUB_CLIENT_SECRET)
         .end((error, hubbers) ->
           processHubbers(hubbers.body)
         )
 
     processHubbers = (hubbers) ->
-      for hubber in hubbers
-        getRepos = hubbers.map((hubber) -> 
-          (callback) ->
-            request
-              .get('https://api.github.com/users/' + hubber.login + '/repos')
-              .end((error, repos) -> 
-                callback(null, repos)
-              )
-        )
-        async.parallel(
-          getRepos,
-          (err, repos) ->
-            console.log results.length 
-        )
+      getRepos = hubbers.map((hubber) -> 
+        (callback) ->
+          request
+            .get('https://api.github.com/users/' + hubber.login + '/repos?client_id=' + process.env.HUBBER_GITHUB_CLIENT_ID + '&client_secret=' + process.env.HUBBER_GITHUB_CLIENT_SECRET)
+            .end((error, repos) -> 
+              callback(null, repos)
+            )
+      )
+      async.parallel(
+        getRepos,
+        (err, repoResponses) ->
+          repos = []
+          processRepos(repo.body, repos) for repo in repoResponses
+          console.log repos[0]
+          console.log repos.length 
+      )
+
+    processRepos = (repos, allRepos)->
+      allRepos.push(repo) for repo in repos
 
     getHubbers(processHubbers)
 
