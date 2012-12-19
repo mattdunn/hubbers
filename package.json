@@ -9,6 +9,10 @@
     "zappajs": ">=0.3.3"
 ,   "coffee-script": "*"
   }
+, "devDependencies": {
+    "should": "*"
+,   "vows": "*"
+  }
 , "engines": {
     "coffee": ">=1.2.0"
   }
