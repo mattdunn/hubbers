@@ -1,5 +1,5 @@
 vows = require 'vows'
-assert = require 'assert'
+should = require 'should'
 
 resource = 
   get: (uri) ->
@@ -12,5 +12,5 @@ vows
       topic: ->
         resource.get('/hubbers')
       'then each hubber should have a name': (hubbers) ->
-        assert.equal hubber.name, 'elvis' for hubber in hubbers
+        hubber.name.should.not.be.empty for hubber in hubbers
   .export(module)
