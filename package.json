@@ -12,6 +12,7 @@
 , "devDependencies": {
     "should": "*"
 ,   "vows": "*"
+,   "superagent": "*"
   }
 , "engines": {
     "coffee": ">=1.2.0"
