@@ -10,7 +10,9 @@ api = vows.prepare(
       .end((error, response) =>
         callback(error, response)
       )
-  , ['get'])
+,
+  ['get']
+)
 
 vows
   .describe('/hubbers')
