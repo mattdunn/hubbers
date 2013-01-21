@@ -18,7 +18,8 @@ vows
   .describe('/hubbers')
   .addBatch
     'when GET /hubbers':
-      topic:  () => return api.get('/hubbers')
+      topic:  () => 
+        api.get('/hubbers')
       'each hubber should have a name': (error, response) =>
         hubber.name.should.not.be.empty for hubber in response.body
   .export(module)
