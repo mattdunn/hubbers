@@ -2,7 +2,9 @@
 
 request = require('superagent')
 
-require('zappajs') ->
+port = process.env.PORT or 3000
+
+require('zappajs') port, ->
   @get '/hubbers': ->
     getHubbers = (processHubbersCallback) =>
       request
