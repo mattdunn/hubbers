@@ -18,6 +18,8 @@
     "test": "vows spec/* --spec"
   }
 , "engines": {
-    "coffee": ">=1.2.0"
+    "node": "0.8.x"
+,   "npm":  "1.1.x"
+,   "coffee": ">=1.2.0"
   }
 }
