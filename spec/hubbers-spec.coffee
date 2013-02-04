@@ -20,6 +20,8 @@ vows
     'when GET /hubbers':
       topic:  =>
         api.get('/hubbers')
-      'each hubber should have a name': (error, response) =>
+      'json should be returned': (error, response) =>
+        response.should.be.json
+      'each hubber should have a name': (response) =>
         hubber.name.should.not.be.empty for hubber in response.body
   .export(module)
