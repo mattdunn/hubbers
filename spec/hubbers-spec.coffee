@@ -17,11 +17,12 @@ api = vows.prepare(
 vows
   .describe('/hubbers')
   .addBatch
-    'when GET /hubbers':
-      topic:  =>
-        api.get('/hubbers')
+    'when GET /hubbers': {
+       topic:  =>
+         api.get('/hubbers')
       'json should be returned': (error, response) =>
         response.should.be.json
-      'each hubber should have a name': (response) =>
+      'each hubber should have a name': (error, response) =>
         hubber.name.should.not.be.empty for hubber in response.body
+    }
   .export(module)
