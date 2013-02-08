@@ -6,15 +6,15 @@ port = process.env.PORT or 3000
 
 require('zappajs') port, ->
   @get '/hubbers': ->
+    githubBaseUrl = "https://api.github.com"
     githubClientId = process.env.HUBBER_GITHUB_CLIENT_ID
     githubClientSecret = process.env.HUBBER_GITHUB_CLIENT_SECRET
-    gitihubAuthentication = '?client_id=#{githubClientId}&client_secret=#{githubClientSecret}'
-    githubBaseUrl = 'https://api.github.com'
-    orgMembersUrl = '/orgs/thoughtworks/members'
+    githubAuthentication = "?client_id=#{githubClientId}&client_secret=#{githubClientSecret}"
 
     getHubbers = (processHubbersCallback) =>
+      orgMembersPath = "/orgs/thoughtworks/members"
       request
-        .get(githubBaseUrl + orgMembersUrl + gitihubAuthentication)
+        .get(githubBaseUrl + orgMembersPath + githubAuthentication)
         .end(processHubbersCallback)
     
     processHubbers =  (error, response) =>
