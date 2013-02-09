@@ -1,1 +1,1 @@
-web: coffee hubbers.coffee
+web: coffee src/hubbers.coffee

@@ -1,7 +1,7 @@
 vows = require 'vows'
 should = require 'should'
 request = require 'superagent'
-app = require '../hubbers'
+app = require '../src/hubbers'
 
 api = vows.prepare(
   get: (path, callback) =>
