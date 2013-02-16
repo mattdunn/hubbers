@@ -11,6 +11,8 @@ require('zappajs') port, ->
     async.waterfall([
       api.getHubbers
     , processor.processHubbers
+    , api.getReposForHubbers
+    , processor.processReposForHubbers
     ], (error, hubbers) =>
       @json hubbers
     )

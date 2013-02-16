@@ -12,3 +12,12 @@ exports.getHubbers = (callback) =>
     .end((error, response) =>
       callback error, response.body
     )
+
+exports.getReposForHubbers = (hubbers, callback) =>
+  hubber = hubbers[0]
+  userReposPath = "/users/#{hubber.name}/repos"
+  request
+    .get(githubBaseUrl + userReposPath + githubAuthentication)
+    .end((error, response) =>
+      callback error, [{ name: hubber.name, repos: response.body}]
+    )
