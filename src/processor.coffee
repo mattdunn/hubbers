@@ -1,2 +1,2 @@
-exports.processHubbers =  (hubbers) =>
-  hubbers.map((hubber) -> { name: hubber.login })
+exports.processHubbers =  (hubbers, callback) =>
+  callback null, hubbers.map((hubber) -> { name: hubber.login })

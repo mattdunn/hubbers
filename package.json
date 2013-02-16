@@ -9,6 +9,7 @@
     "zappajs": ">=0.3.3"
 ,   "coffee-script": "*"
 ,   "superagent": "*"
+,   "async": "*"
   }
 , "devDependencies": {
     "should": "*"

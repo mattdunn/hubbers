@@ -9,8 +9,8 @@ vows
        topic:  =>
          hubbers =
            login: "test-name"
-         processor.processHubbers(hubbers)
-      'each processed hubber should have a name': (processedHubbers) =>
+         processor.processHubbers(hubbers, @callback)
+      'each processed hubber should have a name': (error, processedHubbers) =>
         hubber.name.should.not.be.empty for hubber in processedHubbers
     }
   .export(module)
