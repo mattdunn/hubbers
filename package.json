@@ -10,6 +10,7 @@
 ,   "coffee-script": "*"
 ,   "superagent": "*"
 ,   "async": "*"
+,   "lodash": "*"
   }
 , "devDependencies": {
     "should": "*"

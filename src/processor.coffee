@@ -1,3 +1,5 @@
+_ = require 'lodash'
+
 exports.processHubbers =  (hubbers, callback) =>
   callback null, hubbers.map((hubber) -> { name: hubber.login })
 
@@ -11,4 +13,8 @@ exports.processReposForHubbers =  (reposForHubbers, callback) =>
       ))
 
 exports.processLanguagesForHubbers = (hubbers, callback) =>
-  callback null, [{name: "Ruby"}]
+  callback null,
+    _.flatten hubbers.map((hubber) ->
+      hubber.repos.map((repo)->
+        name: repo.language
+      ))
