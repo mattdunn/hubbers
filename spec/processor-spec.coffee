@@ -38,11 +38,14 @@ vows
         reposForHubbers = [
           name: "test-name"
           repos: [
-            language: "test-language"
+            { language: "test-language" },
+            { language: null }
           ]
         ]
         processor.processLanguagesForHubbers(reposForHubbers, @callback)
       'each language should have a name': (error, languages) =>
          language.should.have.property("name") for language in languages
+      'null languages should be filtered out': (error, languages) =>
+         language.name.should.not.be.null for language in languages
     }
   .export(module)
