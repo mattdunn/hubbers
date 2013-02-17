@@ -16,3 +16,13 @@ require('zappajs') port, ->
     ], (error, hubbers) =>
       @json hubbers
     )
+  @get '/organisation/:name/languages': ->
+    async.waterfall([
+      (callback) => api.getHubbers(@params.name, callback)
+    , processor.processHubbers
+    , api.getReposForHubbers
+    , processor.processReposForHubbers
+    , processor.processLanguagesForHubbers
+    ], (error, languages) =>
+      @json languages
+    )

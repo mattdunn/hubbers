@@ -9,3 +9,6 @@ exports.processReposForHubbers =  (reposForHubbers, callback) =>
         name: repo.name
         language: repo.language
       ))
+
+exports.processLanguagesForHubbers = (hubbers, callback) =>
+  callback null, [{name: "Ruby"}]

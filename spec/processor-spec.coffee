@@ -32,5 +32,17 @@ vows
       'each processed repo for hubber should have a language': (error, processedHubbers) =>
         processedHubbers.forEach (hubber) ->
           repo.language.should.equal("test-language") for repo in hubber.repos
+    },
+    'when processing languages for hubbers': {
+      topic:  ->
+        reposForHubbers = [
+          name: "test-name"
+          repos: [
+            language: "test-language"
+          ]
+        ]
+        processor.processLanguagesForHubbers(reposForHubbers, @callback)
+      'each language should have a name': (error, languages) =>
+         language.should.have.property("name") for language in languages
     }
   .export(module)

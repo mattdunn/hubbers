@@ -29,5 +29,13 @@ vows
       'each hubbers repo should have a name': (error, response) =>
         response.body.forEach (hubber) ->
           repo.name.should.not.be.empty for repo in hubber.repos
+    },
+    'when GET /organisation/thoughtworks/languages': {
+       topic:  =>
+         api.get('/organisation/thoughtworks/languages')
+      'json should be returned': (error, response) =>
+        response.should.be.json
+      'each language should have a name': (error, response) =>
+        language.should.have.property('name') for language in response.body
     }
   .export(module)
