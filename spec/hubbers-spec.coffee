@@ -15,11 +15,11 @@ api = vows.prepare(
 )
 
 vows
-  .describe('/hubbers')
+  .describe('/organisation')
   .addBatch
-    'when GET /hubbers': {
+    'when GET /organisation/thoughtworks/hubbers': {
        topic:  =>
-         api.get('/hubbers')
+         api.get('/organisation/thoughtworks/hubbers')
       'json should be returned': (error, response) =>
         response.should.be.json
       'each hubber should have a name': (error, response) =>

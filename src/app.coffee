@@ -7,9 +7,9 @@ processor =  require './processor'
 port = process.env.PORT or 3000
 
 require('zappajs') port, ->
-  @get '/hubbers': ->
+  @get '/organisation/:name/hubbers': ->
     async.waterfall([
-      api.getHubbers
+      (callback) => api.getHubbers(@params.name, callback)
     , processor.processHubbers
     , api.getReposForHubbers
     , processor.processReposForHubbers
