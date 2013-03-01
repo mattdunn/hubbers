@@ -11,13 +11,3 @@ exports.processReposForHubbers =  (reposForHubbers, callback) =>
         name: repo.name
         language: repo.language
       ))
-
-exports.processLanguagesForHubbers = (hubbers, callback) =>
-  languagesWithNulls =
-    _.flatten hubbers.map((hubber) ->
-      hubber.repos.map((repo)->
-        name: repo.language
-      ))
-  languagesWithoutNulls = _.filter languagesWithNulls, (language) -> language.name?
-
-  callback null, languagesWithoutNulls

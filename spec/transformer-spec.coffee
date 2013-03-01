@@ -1,16 +1,16 @@
 vows = require 'vows'
 should = require 'should'
-processor = require '../src/processor'
+transformer = require '../src/transformer'
 
 vows
-  .describe('processor')
+  .describe('transformer')
   .addBatch
     'when processing hubbers': {
       topic: ->
         hubbers = [
           {login: "test-name"}
         ]
-        processor.processHubbers(hubbers, this.callback)
+        transformer.processHubbers(hubbers, this.callback)
       'each processed hubber should have a name': (error, processedHubbers) =>
         hubber.name.should.equal("test-name") for hubber in processedHubbers
     },
@@ -23,7 +23,7 @@ vows
             language: "test-language"
           ]
         ]
-        processor.processReposForHubbers(reposForHubbers, @callback)
+        transformer.processReposForHubbers(reposForHubbers, @callback)
       'each processed hubber should have a name': (error, processedHubbers) =>
          hubber.name.should.equal("test-name") for hubber in processedHubbers
       'each processed repo for hubber should have a name': (error, processedHubbers) =>
@@ -32,20 +32,5 @@ vows
       'each processed repo for hubber should have a language': (error, processedHubbers) =>
         processedHubbers.forEach (hubber) ->
           repo.language.should.equal("test-language") for repo in hubber.repos
-    },
-    'when processing languages for hubbers': {
-      topic:  ->
-        reposForHubbers = [
-          name: "test-name"
-          repos: [
-            { language: "test-language" },
-            { language: null }
-          ]
-        ]
-        processor.processLanguagesForHubbers(reposForHubbers, @callback)
-      'each language should have a name': (error, languages) =>
-         language.should.have.property("name") for language in languages
-      'null languages should be filtered out': (error, languages) =>
-         language.name.should.not.be.null for language in languages
     }
   .export(module)
