@@ -3,7 +3,8 @@ _ = require 'lodash'
 languagesWithNulls = (hubbers) ->
   _.flatten hubbers.map((hubber) ->
     hubber.repos.map((repo)->
-      name: repo.language
+      name: repo.language,
+      count: 0
     ))
 
 languagesWithoutNulls = (languagesWithNulls) ->

@@ -19,5 +19,7 @@ vows
          language.should.have.property("name") for language in languages
       'null languages should be filtered out': (error, languages) =>
          language.name.should.not.be.null for language in languages
+      'each language should have a count': (error, languages) =>
+         language.should.have.property("count") for language in languages
     }
   .export(module)

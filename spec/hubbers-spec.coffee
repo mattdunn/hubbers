@@ -37,5 +37,7 @@ vows
         response.should.be.json
       'each language should have a name': (error, response) =>
         language.should.have.property('name') for language in response.body
+      'each language should have a count': (error, response) =>
+        language.should.have.property('count') for language in response.body
     }
   .export(module)
