@@ -1,11 +1,14 @@
 _ = require 'lodash'
 
-exports.transform = (hubbers, callback) =>
-  languagesWithNulls =
-    _.flatten hubbers.map((hubber) ->
-      hubber.repos.map((repo)->
-        name: repo.language
-      ))
-  languagesWithoutNulls = _.filter languagesWithNulls, (language) -> language.name?
+languagesWithNulls = (hubbers) ->
+  _.flatten hubbers.map((hubber) ->
+    hubber.repos.map((repo)->
+      name: repo.language
+    ))
 
-  callback null, languagesWithoutNulls
+languagesWithoutNulls = (languagesWithNulls) ->
+  _.filter languagesWithNulls, (language) -> language.name?
+
+exports.transform = (hubbers, callback) =>
+  languages = languagesWithNulls(hubbers)
+  callback null, languagesWithoutNulls(languages)
