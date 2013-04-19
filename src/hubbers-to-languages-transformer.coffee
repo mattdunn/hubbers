@@ -4,7 +4,7 @@ languagesWithNulls = (hubbers) ->
   _.flatten hubbers.map((hubber) ->
     hubber.repos.map((repo)->
       name: repo.language,
-      count: 0
+      count: 1
     ))
 
 languagesWithoutNulls = (languagesWithNulls) ->
