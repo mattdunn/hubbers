@@ -33,5 +33,27 @@ vows
         transformer.transform(reposForHubbers, @callback)
       'the count should be one': (error, languages) =>
          language.count.should.equal(1) for language in languages
+    },
+    'when transforming a language that occurs more than once': {
+      topic:  ->
+        reposForHubbers = [
+          {
+            name: "test-name"
+            repos: [
+              { language: "test-language" },
+            ]
+          },
+          {
+            name: "another-test-name"
+            repos: [
+              { language: "test-language" },
+            ]
+          }
+        ]
+        transformer.transform(reposForHubbers, @callback)
+      'the transformed language should appear exactly once': (error, languages) =>
+         (language for language in languages when language.name == 'test-language').length.should.equal(1)
+      'the count should be two': (error, languages) =>
+         language.count.should.equal(2) for language in languages
     }
   .export(module)
