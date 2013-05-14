@@ -14,14 +14,16 @@ languagesWithoutDuplicates = (languagesWithDuplicates) ->
   _.reduce(
     languagesWithDuplicates,
     (languages, language) ->
-      language2 = _.find(languages, {name: language.name})
-      if(!language2)
-        languages.push language
-        language2 = language
-      language2.count = language2.count + 1
+      resolvedLanguage = findOrAddToArray(languages, language, {name: language.name})
+      resolvedLanguage.count += 1
       languages
     ,[]
   )
+
+findOrAddToArray = (array, elementToAdd, predicate) ->
+  element = _.find(array, predicate)
+  array.push elementToAdd if !element
+  _.find(array, predicate)
 
 exports.transform = (hubbers, callback) =>
   languages = languagesWithNulls(hubbers)
