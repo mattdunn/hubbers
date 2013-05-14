@@ -11,19 +11,20 @@ languagesWithoutNulls = (languagesWithNulls) ->
   _.filter languagesWithNulls, (language) -> language.name?
 
 languagesWithoutDuplicates = (languagesWithDuplicates) ->
-  _.reduce(languagesWithDuplicates,
-           (accum, language) ->
-             language2 = _.find(accum, {name: language.name})
-             if(!language2)
-               accum.push(language)
-               language2 = language
-             language2.count = language2.count + 1
-             accum
-           ,[]
+  _.reduce(
+    languagesWithDuplicates,
+    (languages, language) ->
+      language2 = _.find(languages, {name: language.name})
+      if(!language2)
+        languages.push language
+        language2 = language
+      language2.count = language2.count + 1
+      languages
+    ,[]
   )
 
 exports.transform = (hubbers, callback) =>
   languages = languagesWithNulls(hubbers)
-  x2 = languagesWithoutNulls(languages)
-  x3 = languagesWithoutDuplicates(x2)
-  callback null, languagesWithoutNulls(x3)
+  languages = languagesWithoutNulls(languages)
+  languages = languagesWithoutDuplicates(languages)
+  callback null, languages
