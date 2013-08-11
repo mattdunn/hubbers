@@ -11,6 +11,7 @@
 ,   "superagent": "*"
 ,   "async": "*"
 ,   "lodash": "*"
+,   "cors": "*"
   }
 , "devDependencies": {
     "should": "*"
