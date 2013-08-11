@@ -1,6 +1,12 @@
 <html>
   <head>
     <title>Hubbers</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript">
+      $.getJSON('http://hubbers.herokuapp.com/organisation/thoughtworks/languages', function(data) {
+       console.log(data); 
+      });
+    </script>
   </head>
   <body>
   </body>
