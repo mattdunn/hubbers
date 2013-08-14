@@ -3,9 +3,16 @@
     <title>Hubbers</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript">
-      $.getJSON('http://hubbers.herokuapp.com/organisation/thoughtworks/languages', function(data) {
-       console.log(data); 
-      });
+      function effectiveDeviceWidth() {
+        var deviceWidth = window.orientation == 0 ? window.screen.width : window.screen.height;
+        // iOS returns available pixels, Android returns pixels / pixel ratio
+        // http://www.quirksmode.org/blog/archives/2012/07/more_about_devi.html
+        if (navigator.userAgent.indexOf('Android') >= 0 && window.devicePixelRatio) {
+          deviceWidth = deviceWidth / window.devicePixelRatio;
+        }
+        return deviceWidth;
+        }
+        document.write(effectiveDeviceWidth());
     </script>
   </head>
   <body>
