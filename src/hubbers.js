@@ -1,10 +1,10 @@
 (function($, d3, _) {
-  function getHubbers(){
-    return $.getJSON('http://hubbers.herokuapp.com/organisation/thoughtworks/languages');
+  function getHubbers(organisationName){
+    return $.getJSON('http://hubbers.herokuapp.com/organisation/' + organisationName + '/languages');
   }
 
   function drawHubbers(hubbers){
-    d3.select("body")
+    d3.select("#languages")
       .append("svg")
         .attr("width", 550)
         .attr("height", 550)
@@ -19,6 +19,11 @@
   }
 
   $(function() {
-    getHubbers().done(drawHubbers);
+    $('#organisationName').keypress(function (event) {
+      if (event.which == 13) {
+        event.preventDefault();
+        getHubbers($('#organisationName').val()).done(drawHubbers);
+      }
+    });
   });
 })(jQuery, d3, _);
